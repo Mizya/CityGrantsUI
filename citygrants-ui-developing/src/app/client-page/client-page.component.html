@@ -1,0 +1,442 @@
+        <mat-card *ngIf="displayDescriptionForm" class="client-cart">
+          <mat-card-header>
+            <mat-card-title>Форма для заповнення заявки</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="client-form-container">
+              <form [formGroup]="appDescForm" (ngSubmit)="submitDescriptionForm()" novalidate>
+                  <mat-form-field class="full-width">
+                      <textarea matInput #name placeholder="Назва проекту :" formControlName="name" required></textarea>
+                      <mat-hint align="end">{{name.value.length}} / 250</mat-hint>
+                      <mat-error *ngIf="appDescForm">Назва <strong>обов’язкова</strong> для заповнення.</mat-error>
+                  </mat-form-field>
+                  <mat-form-field  class="full-width">
+                      <input matInput placeholder = "Запитувана сума, грн.:" type="number" formControlName="requestedBudget" required>
+                      <span matPrefix>₴&nbsp;</span>
+                      <span matSuffix>.00</span>
+                  </mat-form-field>
+                  <mat-form-field  class="full-width">
+                    <textarea matInput placeholder="Назва організації або ініціативної групи, що подає проект:"  formControlName="organizationName"></textarea>
+                  </mat-form-field>
+                  <mat-form-field  class="full-width">
+                      <textarea matInput placeholder="Тематичний напрямок, під який підпадає проект:" formControlName="theme" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="6"></textarea>
+                  </mat-form-field>
+                  <mat-form-field  class="full-width">
+                    <input matInput placeholder="Термін втілення проекту:" formControlName="requiredTime">
+                  </mat-form-field>
+                  <mat-form-field  class="full-width">
+                      <input matInput placeholder="Координатор/ка проекту:" formControlName="coordinatorName">
+                  </mat-form-field>
+                  <mat-form-field  class="full-width">
+                      <span matPrefix>+38 &nbsp;</span>   
+                      <input matInput placeholder="Координатор/ка проекту (моб.тел.):" formControlName="coordinatorPhone" required>
+                      <mat-icon matSuffix>phone</mat-icon>
+                      <mat-error *ngIf="appDescForm.value.coordinatorPhone == ''">телефон <strong>обов’язкова</strong> для заповнення.</mat-error>
+                  </mat-form-field>
+                  <mat-form-field  class="full-width">  
+                      <input matInput placeholder="Координатор/ка проекту (електронна адреса):" formControlName="coordinatorEmail" required>
+                  </mat-form-field>
+                  <mat-form-field  class="full-width">
+                      <textarea matInput placeholder="Команда проекту (не менш як 2 особи, з контактами (моб.тел., електронна адреса) та розподілом обов’язків):" formControlName="projectMembers"></textarea>
+                  </mat-form-field>
+                  <mat-form-field  class="full-width">
+                      <textarea matInput placeholder="Попередній досвід команди проекту у громадській діяльності або волонтерстві (не більше 5 рядків про кожного члена команди):" formControlName="expirienceDescription"></textarea>
+                  </mat-form-field>
+                  <mat-form-field class="full-width">
+                      <textarea matInput placeholder="Адреса організації (якщо є):" formControlName="address"></textarea>
+                  </mat-form-field>
+                  <mat-form-field  class="full-width">
+                      <textarea matInput placeholder="Веб-сайт, Facebook:" formControlName="webaddress"></textarea>
+                  </mat-form-field>
+                  <mat-form-field class="full-width">
+                      <textarea matInput placeholder="Мета проекту (одним реченням, що саме і яким чином плануєте досягти внаслідок реалізації проекту):" formControlName="goal"></textarea>
+                  </mat-form-field>
+                  <mat-form-field class="full-width">
+                      <textarea matInput placeholder="Актуальність проекту (чому запропонована у проекті діяльність є важливою, максимум 100 слів):" formControlName="actuality"></textarea>
+                  </mat-form-field>
+                  <mat-form-field  class="full-width">
+                      <textarea matInput placeholder="Опис проекту (розгорнуто, не більше як 300 слів, потрібно описати, що відбуватиметься, які заходи будуть здійснені у
+                      рамках проекту):" formControlName="fullDescription"></textarea>
+                  </mat-form-field>
+                  <mat-form-field  class="full-width">
+                      <textarea matInput placeholder="Цільові групи (на чиї потреби чи на кого спрямована дія проекту, як Ви плануєте запрошувати/залучати цю аудиторію):" formControlName="targetGroup"></textarea>
+                  </mat-form-field>
+                  <mat-form-field  class="full-width">
+                      <textarea matInput placeholder="Очікувані результати проекту (кількісні та якісні, короткострокові та довгострококові показники успішності проекту):" formControlName="expectedResults"></textarea>
+                  </mat-form-field>
+                  <mat-form-field  class="full-width">
+                      <textarea matInput placeholder="Погодження та дозволи, необхідні для втілення проекту:" formControlName="requiredPermissions"></textarea>
+                  </mat-form-field>
+                  <mat-form-field  class="full-width">
+                      <textarea matInput placeholder="Партнери та спонсори (якщо є):" formControlName="partners"></textarea>
+                  </mat-form-field>
+                  <button mat-button type="submit" [disabled]="!appDescForm.valid" mat-raised-button color="primary">Зберегти
+                      <mat-icon>done</mat-icon></button>
+              </form>
+            </div>
+          </mat-card-content>
+      </mat-card>
+      <mat-card *ngIf="displayCostItemForm" class="client-cart">
+        <mat-card-header>
+          <mat-card-title>Форма для заповнення кошторису</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+        <form [formGroup]="appCostItem" (ngSubmit)="submitCostItemForm()" novalidate>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Пояснення" formControlName="description">
+          </mat-form-field>
+          <mat-form-field class="full-width">
+              <input matInput placeholder="Вартість за одиниицю часу/на одну особу, грн.:" formControlName="cost">
+          </mat-form-field>
+          <mat-form-field class="full-width"> 
+              <input matInput placeholder="Кількість / затрачений час:" formControlName="count">
+          </mat-form-field>
+          <mat-form-field class="full-width">
+              <input matInput placeholder="Витрати з програми, грн.:" formControlName="consumptionsFromProgram">
+          </mat-form-field>
+          <mat-form-field class="full-width">
+              <input matInput placeholder="Витарти з інших джерел, грн.:" formControlName="consumptionsFromOtherSources">
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Оберіть категорію витрат:" formControlName="category">
+              <mat-option disabled>Оберіть категорію витрат</mat-option>
+              <mat-option *ngFor="let category of costItemCategories" [value]="category.value">{{category.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-button type="submit" [disabled]="!appCostItem.valid" class="btn btn-success">Зберегти</button>
+        </form>
+    <div>
+      <ng-container *ngIf="calculations">
+        <div>
+          <label class="btn btn-primary">
+            <input type="file" style="display: none;" multiple="true" (change)="saveImagesToUpload($event)" accept=".jpg, .png">
+            <span>Donwnload images</span>
+          </label>
+          <label class="btn btn-primary">
+            <input type="file" style="display: none;" multiple="true" (change)="savePdfToUpload($event)" accept=".pdf">
+            <span>Donwload pdf</span>
+          </label>
+          <button  mat-raised-button color="primary" (click)="confirmProjectApplication()">Відіслати на розгляд журі</button>
+          <button  mat-raised-button color="primary" (click)="sentApplicationToReview">Відіслати для отримання консультації</button>
+
+          <div *ngIf="images.length > 0 || pdfDocs.length > 0">
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title><b>Завантажені файли:</b></mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <mat-list *ngFor="let image of images">
+                  <mat-list-item>{{image.name}}</mat-list-item>
+                  <mat-divider></mat-divider>
+                </mat-list>
+                <mat-list *ngFor="let pdf of pdfDocs">
+                  <mat-list-item>{{pdf.name}}</mat-list-item>
+                  <mat-divider></mat-divider>
+                </mat-list>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+
+        <mat-grid-list cols="1" rowHeight="50px">
+          <mat-grid-tile>Бюджет</mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="6" rowHeight="50px" [style.background]="collorAmount">
+          <mat-grid-tile></mat-grid-tile>
+          <mat-grid-tile></mat-grid-tile>
+          <mat-grid-tile></mat-grid-tile>
+          <mat-grid-tile [colspan]=2>Сума витрат</mat-grid-tile>
+          <mat-grid-tile></mat-grid-tile>
+        </mat-grid-list>
+        <ng-container *ngIf="checkIfNotEmpty(budget.costItemsFee)">
+          <mat-grid-list cols="6" rowHeight="50px" [style.background]="collorCategory" >
+            <mat-grid-tile>{{costItemCategories[0].name}}</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile  [style.background]="lightgreen">з програми</mat-grid-tile>
+            <mat-grid-tile  [style.background]="lightgreen">з інших джерел</mat-grid-tile>
+              <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px">
+            <mat-grid-tile>Особа, виконувані функції</mat-grid-tile>
+            <mat-grid-tile>Розмір винагороди за місяць</mat-grid-tile>
+            <mat-grid-tile>Затрачений робочий час</mat-grid-tile>
+            <mat-grid-tile>грн</mat-grid-tile>
+            <mat-grid-tile>грн</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px" *ngFor="let costItem of budget.costItemsFee; let i = index">
+            <mat-grid-tile>{{costItem.description}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.cost}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.count}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.consumptionsFromProgram}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.consumptionsFromOtherSources}}</mat-grid-tile>
+            <mat-grid-tile> <button mat-raised-button color="primary" (click)="removeCostItem(i,costItemCategories[0].value)" >Видалити</button></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px">
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>Сума : </mat-grid-tile>
+            <mat-grid-tile>{{calculations.totalFeeFromProgram}}</mat-grid-tile>
+            <mat-grid-tile>{{calculations.totalFeeFromOtherSources}}</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+        </ng-container>
+        <ng-container *ngIf="checkIfNotEmpty(budget.costItemsTransport)">
+          <mat-grid-list cols="6" rowHeight="50px" [style.background]="collorCategory">
+            <mat-grid-tile>{{costItemCategories[1].name}}</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>з програми</mat-grid-tile>
+            <mat-grid-tile>з інших джерел</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px">
+            <mat-grid-tile>Пояснення</mat-grid-tile>
+            <mat-grid-tile>Вартість на одну особу / день</mat-grid-tile>
+            <mat-grid-tile>К-сть осіб</mat-grid-tile>
+            <mat-grid-tile>грн</mat-grid-tile>
+            <mat-grid-tile>грн</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px" *ngFor="let costItem of budget.costItemsTransport; let i = index">
+            <mat-grid-tile>{{costItem.description}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.cost}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.count}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.consumptionsFromProgram}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.consumptionsFromOtherSources}}</mat-grid-tile>
+            <mat-grid-tile> <button mat-raised-button color="primary" (click)="removeCostItem(i,costItemCategories[1].value)" >Видалити</button></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px">
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>Сума : </mat-grid-tile>
+            <mat-grid-tile>{{calculations.totalTransportFromProgram}}</mat-grid-tile>
+            <mat-grid-tile>{{calculations.totalTransportFromOtherSources}}</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+        </ng-container>
+        <ng-container *ngIf="checkIfNotEmpty(budget.costItemsNutrition)">
+          <mat-grid-list cols="6" rowHeight="50px" [style.background]="collorCategory">
+            <mat-grid-tile>{{costItemCategories[2].name}}</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>з програми</mat-grid-tile>
+            <mat-grid-tile>з інших джерел</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px">
+            <mat-grid-tile>Пояснення</mat-grid-tile>
+            <mat-grid-tile>Вартість на одну особу</mat-grid-tile>
+            <mat-grid-tile>К-сть осіб</mat-grid-tile>
+            <mat-grid-tile>грн</mat-grid-tile>
+            <mat-grid-tile>грн</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px" *ngFor="let costItem of budget.costItemsNutrition; let i = index">
+            <mat-grid-tile>{{costItem.description}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.cost}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.count}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.consumptionsFromProgram}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.consumptionsFromOtherSources}}</mat-grid-tile>
+            <mat-grid-tile> <button mat-raised-button color="primary" (click)="removeCostItem(i,costItemCategories[2].value)" >Видалити</button></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px">
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>Сума : </mat-grid-tile>
+            <mat-grid-tile>{{calculations.totalNutritionFromProgram}}</mat-grid-tile>
+            <mat-grid-tile>{{calculations.totalNutritionFromOtherSources}}</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+        </ng-container>
+        <ng-container *ngIf="checkIfNotEmpty(budget.costItemsRent)">
+          <mat-grid-list cols="6" rowHeight="50px" [style.background]="collorCategory">
+            <mat-grid-tile>{{costItemCategories[3].name}}</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>з програми</mat-grid-tile>
+            <mat-grid-tile>з інших джерел</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px">
+            <mat-grid-tile>Пояснення</mat-grid-tile>
+            <mat-grid-tile>Вартість на годину/день</mat-grid-tile>
+            <mat-grid-tile>К-сть годин/днів</mat-grid-tile>
+            <mat-grid-tile>грн</mat-grid-tile>
+            <mat-grid-tile>грн</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px" *ngFor="let costItem of budget.costItemsRent; let i = index">
+            <mat-grid-tile>{{costItem.description}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.cost}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.count}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.consumptionsFromProgram}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.consumptionsFromOtherSources}}</mat-grid-tile>
+            <mat-grid-tile> <button mat-raised-button color="primary" (click)="removeCostItem(i,costItemCategories[3].value)" >Видалити</button></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px">
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>Сума : </mat-grid-tile>
+            <mat-grid-tile>{{calculations.totalRentFromProgram}}</mat-grid-tile>
+            <mat-grid-tile>{{calculations.totalRentFromOtherSources}}</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+        </ng-container>
+        <ng-container *ngIf="checkIfNotEmpty(budget.costItemsAdministrative)">
+          <mat-grid-list cols="6" rowHeight="50px" [style.background]="collorCategory">
+            <mat-grid-tile>{{costItemCategories[4].name}}</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>з програми</mat-grid-tile>
+            <mat-grid-tile>з інших джерел</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px">
+            <mat-grid-tile>Пояснення</mat-grid-tile>
+            <mat-grid-tile>Вартість</mat-grid-tile>
+            <mat-grid-tile>Кількість</mat-grid-tile>
+            <mat-grid-tile>грн</mat-grid-tile>
+            <mat-grid-tile>грн</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px" *ngFor="let costItem of budget.costItemsAdministrative; let i = index">
+            <mat-grid-tile>{{costItem.description}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.cost}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.count}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.consumptionsFromProgram}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.consumptionsFromOtherSources}}</mat-grid-tile>
+            <mat-grid-tile> <button mat-raised-button color="primary" (click)="removeCostItem(i,costItemCategories[4].value)" >Видалити</button></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px">
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>Сума : </mat-grid-tile>
+            <mat-grid-tile>{{calculations.totalAdvertisingFromProgram}}</mat-grid-tile>
+            <mat-grid-tile>{{calculations.totalAdministrativeFromOtherSources}}</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+        </ng-container>
+        <ng-container *ngIf="checkIfNotEmpty(budget.costItemsAdvertising)">
+          <mat-grid-list cols="6" rowHeight="50px" [style.background]="collorCategory">
+            <mat-grid-tile>{{costItemCategories[5].name}}</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>з програми</mat-grid-tile>
+            <mat-grid-tile>з інших джерел</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px">
+            <mat-grid-tile>Пояснення</mat-grid-tile>
+            <mat-grid-tile>Вартість</mat-grid-tile>
+            <mat-grid-tile>Кількість</mat-grid-tile>
+            <mat-grid-tile>грн</mat-grid-tile>
+            <mat-grid-tile>грн</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px" *ngFor="let costItem of budget.costItemsAdvertising; let i = index">
+            <mat-grid-tile>{{costItem.description}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.cost}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.count}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.consumptionsFromProgram}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.consumptionsFromOtherSources}}</mat-grid-tile>
+            <mat-grid-tile> <button mat-raised-button color="primary" (click)="removeCostItem(i,costItemCategories[5].value)" >Видалити</button></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px">
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>Сума : </mat-grid-tile>
+            <mat-grid-tile>{{calculations.totalAdvertisingFromProgram}}</mat-grid-tile>
+            <mat-grid-tile>{{calculations.totalAdvertisingFromOtherSources}}</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+        </ng-container>
+        <ng-container *ngIf="checkIfNotEmpty(budget.costItemsMaterial)">
+          <mat-grid-list cols="6" rowHeight="50px" [style.background]="collorCategory">
+            <mat-grid-tile>{{costItemCategories[6].name}}</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>з програми</mat-grid-tile>
+            <mat-grid-tile>з інших джерел</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px">
+            <mat-grid-tile>Пояснення</mat-grid-tile>
+            <mat-grid-tile>Вартість</mat-grid-tile>
+            <mat-grid-tile>Кількість</mat-grid-tile>
+            <mat-grid-tile>грн</mat-grid-tile>
+            <mat-grid-tile>грн</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px" *ngFor="let costItem of budget.costItemsMaterial; let i = index">
+            <mat-grid-tile>{{costItem.description}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.cost}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.count}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.consumptionsFromProgram}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.consumptionsFromOtherSources}}</mat-grid-tile>
+            <mat-grid-tile> <button mat-raised-button color="primary" (click)="removeCostItem(i,costItemCategories[6].value)" >Видалити</button></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px">
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>Сума : </mat-grid-tile>
+            <mat-grid-tile>{{calculations.totalMaterialsFromProgram}}</mat-grid-tile>
+            <mat-grid-tile>{{calculations.totalMaterialsFromOtherSources}}</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+        </ng-container>
+        <ng-container *ngIf="checkIfNotEmpty(budget.costItemsOthers)">
+          <mat-grid-list cols="6" rowHeight="50px" [style.background]="collorCategory">
+            <mat-grid-tile>{{costItemCategories[7].name}}</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>з програми</mat-grid-tile>
+            <mat-grid-tile>з інших джерел</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px">
+            <mat-grid-tile>Пояснення</mat-grid-tile>
+            <mat-grid-tile>Вартість</mat-grid-tile>
+            <mat-grid-tile>Кількість</mat-grid-tile>
+            <mat-grid-tile>грн</mat-grid-tile>
+            <mat-grid-tile>грн</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px" *ngFor="let costItem of budget.costItemsOthers; let i = index">
+            <mat-grid-tile>{{costItem.description}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.cost}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.count}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.consumptionsFromProgram}}</mat-grid-tile>
+            <mat-grid-tile>{{costItem.consumptionsFromOtherSources}}</mat-grid-tile>
+            <mat-grid-tile> <button mat-raised-button color="primary" (click)="removeCostItem(i,costItemCategories[7].value)" >Видалити</button></mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="6" rowHeight="50px">
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>Сума : </mat-grid-tile>
+            <mat-grid-tile>{{calculations.totalOthersFromProgram}}</mat-grid-tile>
+            <mat-grid-tile>{{calculations.totalOthersFromOtherSources}}</mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+          </mat-grid-list>
+        </ng-container>
+        <mat-grid-list cols="6" rowHeight="50px" [style.background]="collorGeneral">
+          <mat-grid-tile></mat-grid-tile>
+          <mat-grid-tile></mat-grid-tile>
+          <mat-grid-tile>Загальна сума : </mat-grid-tile>
+          <mat-grid-tile>{{calculations.totalFromProgram}}</mat-grid-tile>
+          <mat-grid-tile>{{calculations.totalFromOtherSources}}</mat-grid-tile>
+          <mat-grid-tile></mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="6" rowHeight="50px" [style.background]="collorGeneral">
+          <mat-grid-tile></mat-grid-tile>
+          <mat-grid-tile></mat-grid-tile>
+          <mat-grid-tile>Загальний бюджет проекту : </mat-grid-tile>
+          <mat-grid-tile>{{calculations.totalFromProgram + calculations.totalFromOtherSources}}</mat-grid-tile>
+          <mat-grid-tile></mat-grid-tile>
+          <mat-grid-tile></mat-grid-tile>
+        </mat-grid-list>
+      </ng-container>     
+    </div>
+  </mat-card-content>
+  </mat-card>
